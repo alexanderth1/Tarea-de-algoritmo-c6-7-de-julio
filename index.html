@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is a project to pass the first semester of the algorithm subject at UNEMI University">
+    <meta name="author" content="Juan Taday, Nayeli Figueroa ,Cristian Montoya..">
+    <meta name="generator" content="Juan 0.84.0">
+    <title>Tarea de Logica de programacion</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/headers/">
+
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/css/cssBustrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/headers.css">
+    <style>
+
+        #game-container {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1px;
+            justify-content: center;
+            align-items: flex-start;
+            /* Alinear en la parte superior del contenedor */
+            margin-left: auto;
+            margin-right: auto;
+            height: 220px;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: border-width 0.3s ease-in-out;
+            border: 2px solid #ccc;
+        }
+
+        .correct-guess {
+            border-width: 1px;
+            border-color: green;
+            background-color: #cacaca;
+        }
+
+        .hide {
+        display: none;
+        }
+
+        #timer {
+            z-index: 1;
+            /* Asegura que el temporizador esté en la parte superior */
+        }
+
+        @keyframes ganadorAnimacion {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(3);
+                margin-top: -80px;
+            }
+
+            100% {
+                transform: scale(1);
+                margin-top: 0;
+            }
+        }
+
+        #timer.ganador {
+            animation: ganadorAnimacion 2s ease-in-out;
+        }
+
+        a.nav-link:hover {
+        cursor: pointer;
+        }
+        
+  </style>
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="/headers.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/cssBustrap/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Comic Sans MS', cursive;">
+
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <div class="container-fluid">
+                <!-- Botón de hamburguesa -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Contenido del encabezado -->
+                <a class="navbar-brand" href="/">
+                    <img src="/img/logo-unemi.png" alt="Juegos mentales" class="bi d-block mx-auto mb-1" height="48">
+                </a>
+
+                <!-- Menús -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="mentales/mainMentales">
+                                <img src="/img/cerebro_musculoso.png" alt="Juegos mentales"
+                                    class="bi d-block mx-auto mb-1" height="48">
+                                Juegos mentales
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="reflejos/mainReflejos">
+                                <img src="/img/reflejo_sin_fondo.png" alt="Juegos mentales"
+                                    class="bi d-block mx-auto mb-1" height="48">
+                                Activa tus Reflejos
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link active"  href="matemagicos/mainMate">
+                                <img src="/img/matematicon_sin_fondo.png" alt="Juegos mentales"
+                                    class="bi d-block mx-auto mb-1" height="48">
+                                Ejercicios Matemágicos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link active"  href="aventuraslit/mainAventuras">
+                                <img src="/img/literaria_sin_fondo.png" alt="Juegos mentales"
+                                    class="bi d-block mx-auto mb-1" height="48">
+                                Aventuras Literarias
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link active" onclick="cargarContenido('tablas/listaNotas')">
+                                <img src="/img/calificaData.png" alt="Juegos mentales" class="bi d-block mx-auto mb-1"
+                                   height="48">
+                                Califica Data
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Menú de usuario -->
+                    <div class="dropdown text-end ms-auto" style="margin-right: 20px;">
+                        <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/img/user02.png" alt="mdo" width="36" height="36"
+                                class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="nav-link active">Profile </a> </li>
+                            <li><a class="nav-link active">Account </a> </li>
+                            <li><a class="nav-link active">Credits </a> </li>
+                            <li><a class="nav-link active">Scores </a> </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="b-example-divider" style="height: 4px;"></div>
+
+    <div id="card_container"></div>
+
+    <hr style="margin: 20px;">
+
+    <div id="game_container"></div>
+
+
+    <!-- Footer con clases de Bootstrap -->
+    <footer class="bg-info text-white p-3 fixed-bottom" style="height:40px;padding: 0px; margin: 0px;">
+        <div class="container d-flex justify-content-between"
+            style="color: rgb(0, 0, 0);padding: 0px; margin: 0px; font-size: smaller;">
+            <p style="padding: 0px;margin: 0px;">&copy;2024 UNEMI</p>
+            <p style="padding: 0px;margin: 0px;">www.unemi.algoritmo.com.ec</p>
+        </div>
+    </footer>
+
+    <script src="/js/jsBustrap/bootstrap.bundle.min.js"></script>
+    <script src="/_lib/adminContainer.js" type="module"></script>
+    <script src="/_lib/gameManager.js"></script>
+    
+</body>
+
+</html>
